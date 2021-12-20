@@ -25,12 +25,8 @@ public class BlockTile : MonoBehaviour {
     private const string BLOCK_BIG_PATH = "Sprites/BlockTiles/Big/Big_{0}_{1}";
     [SerializeField] private BlockColor _color = BlockColor.Blue;
 
-    void Start() {
-        Init();
-    }
-
-    void Update() {
-        
+    public void SetData(BlockColor color) {
+        _color = color;
     }
 
     public void Init() {

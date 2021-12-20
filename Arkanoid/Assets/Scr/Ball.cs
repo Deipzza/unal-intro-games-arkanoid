@@ -44,4 +44,15 @@ public class Ball : MonoBehaviour {
         }
         _rb.velocity = velocity;
     }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        // Verifico si el objeto impactado no tiene un componente de tipo BlockTile
+        BlockTile blockTileHit;
+        if (!other.collider.TryGetComponent(out blockTileHit)) {
+            return; // Si no lo tiene, no hace nada
+        }
+        // Si sí lo tiene, invoca OnHitCOllision con el punto de contacto entre bola y bloque
+        ContactPoint2D contactPoint = other.contacts[0];
+        blockTileHit.OnHitCollision(contactPoint);
+    }
 }

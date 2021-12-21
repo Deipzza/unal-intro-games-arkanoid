@@ -24,8 +24,12 @@ public class BlockTile : MonoBehaviour {
     private int _currentHits = 0; // Cantidad actual de golpes que ha recibido el bloque
     private const string BLOCK_BIG_PATH = "Sprites/BlockTiles/Big/Big_{0}_{1}";
     [SerializeField] private BlockColor _color = BlockColor.Blue;
+    private int _id;
+    [SerializeField] private int _score = 10;
+    public int Score => _score; //
 
-    public void SetData(BlockColor color) {
+    public void SetData(int id, BlockColor color) {
+        _id = id;
         _color = color;
     }
 
@@ -47,6 +51,7 @@ public class BlockTile : MonoBehaviour {
         if (_currentHits >= _totalHits) {
             _collider.enabled = false;
             gameObject.SetActive(false);
+            ArkanoidEvent.OnBlockDestroyedEvent?.Invoke(_id); // Se invoca el evento cuando el bloque es destruido
         }
         else {
             _renderer.sprite = GetBlockSprite(_type, _color, _currentHits);

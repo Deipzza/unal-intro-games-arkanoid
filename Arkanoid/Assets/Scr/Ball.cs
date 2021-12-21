@@ -10,10 +10,6 @@ public class Ball : MonoBehaviour {
     [SerializeField] private float _minSpeed = 4;
     [SerializeField] private float _maxSpeed = 7;
 
-    public void Start() {
-        Init();
-    }
-
     public void Init() {
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
@@ -43,6 +39,11 @@ public class Ball : MonoBehaviour {
             velocity.y += Mathf.Sign(velocity.y) * BALL_VELOCITY_MIN_AXIS_VALUE * Time.deltaTime;
         }
         _rb.velocity = velocity;
+    }
+
+    internal void Hide() {
+        _collider.enabled = false;
+        gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter2D(Collision2D other) {

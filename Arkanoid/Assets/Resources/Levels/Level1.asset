@@ -17,7 +17,7 @@ MonoBehaviour:
   Rows:
   - BlockAmount: 7
     blockSpacing: 0.1
-    BlockType: 1
+    BlockType: 0
     BlockColor: 0
   - BlockAmount: 7
     blockSpacing: 0.1
@@ -25,7 +25,7 @@ MonoBehaviour:
     BlockColor: 0
   - BlockAmount: 7
     blockSpacing: 0.1
-    BlockType: 1
+    BlockType: 0
     BlockColor: 0
   - BlockAmount: 7
     blockSpacing: 0.1
@@ -33,7 +33,7 @@ MonoBehaviour:
     BlockColor: 0
   - BlockAmount: 7
     blockSpacing: 0.1
-    BlockType: 1
+    BlockType: 0
     BlockColor: 0
   - BlockAmount: 7
     blockSpacing: 0.1
@@ -41,5 +41,5 @@ MonoBehaviour:
     BlockColor: 0
   - BlockAmount: 7
     blockSpacing: 0.1
-    BlockType: 1
+    BlockType: 0
     BlockColor: 0

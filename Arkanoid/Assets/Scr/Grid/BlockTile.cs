@@ -44,9 +44,9 @@ public class BlockTile : MonoBehaviour {
         _renderer.sprite = GetBlockSprite(_type, _color, 0);
     }
 
-    public void OnHitCollision(ContactPoint2D contactPoint) { // Se ejecuta cuando la bola colisiona con el bloque
-        _currentHits++; // Aumento la cantidad de golpes que ha recibidoel bloque
-
+    public void OnHitCollision(ContactPoint2D contactPoint, int hit) { // Se ejecuta cuando la bola colisiona con el bloque
+        _currentHits += hit; // Aumento la cantidad de golpes que ha recibido el bloque
+        Debug.Log("hit " + hit);
         // Si la cantidad de golpes es igual o superior que la máxima soportada se desactiva el bloque
         if (_currentHits >= _totalHits) {
             _collider.enabled = false;

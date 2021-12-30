@@ -8,5 +8,8 @@ public class DeadZone : MonoBehaviour {
         if (other.transform.TryGetComponent<Ball>(out Ball ball)) {
             ArkanoidEvent.OnBallReachDeadZoneEvent?.Invoke(ball);
         }
+        if (other.transform.TryGetComponent<PowerUp>(out PowerUp powerUp)) {
+            ArkanoidEvent.OnPowerUpReachDeadZoneEvent?.Invoke(powerUp);
+        }
     }
 }

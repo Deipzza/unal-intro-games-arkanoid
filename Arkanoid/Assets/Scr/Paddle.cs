@@ -28,4 +28,19 @@ public class Paddle : MonoBehaviour {
    
         transform.position = Vector3.Lerp(transform.position, _targetPosition, Time.deltaTime * _speed);
     }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        // Verifico si el objeto impactado no tiene un componente de tipo PowerUp
+        PowerUp powerUpHit;
+        if (!other.collider.TryGetComponent(out powerUpHit)) {
+            return; // Si no lo tiene, no hace nada
+        }
+        // Si sí lo tiene, invoca OnHitCOllision con el punto de contacto entre bola y bloque
+        ContactPoint2D contactPoint = other.contacts[0];
+        powerUpHit.OnHitCollision(contactPoint);
+    }
+
+    public void ResetPaddle() {
+
+    }
 }

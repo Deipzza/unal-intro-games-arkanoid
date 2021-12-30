@@ -10,12 +10,20 @@ public class ArkanoidController : MonoBehaviour {
     private const string BALL_PREFAB_PATH = "Prefabs/Ball"; // Como es un valor que no se va a cambiar se le pone const
     private readonly Vector2 BALL_INIT_POSITION = new Vector2(0, -0.86f); // Como es un objeto que no se va a cambiar se le pone readonly
     private Ball _ballPrefab = null;
-     private List<Ball> _balls = new List<Ball>();
-     private int _totalScore = 0;
+    private List<Ball> _balls = new List<Ball>();
+    // private List<PowerUp> _powerUps = new List<PowerUp>();
+    private int _totalScore = 0;
+    private float powerUpValue = 0.0f;
+    private PowerUp _powerUpPrefab = null;
+    private const string POWERUP_PREFAB_PATH = "Prefabs/PowerUp";
+
+    // TO ERASE LATER
+    //  [SerializeField] private Paddle _paddle;
     
     private void Start() {
         ArkanoidEvent.OnBallReachDeadZoneEvent += OnBallReachDeadZone;
         ArkanoidEvent.OnBlockDestroyedEvent += OnBlockDestroyed;
+        // ArkanoidEvent.OnPowerUpReachDeadZoneEvent += OnPowerUpReachDeadZone;
     }
 
     private void Update() {
@@ -27,6 +35,7 @@ public class ArkanoidController : MonoBehaviour {
     private void OnDestroy() {
         ArkanoidEvent.OnBallReachDeadZoneEvent -= OnBallReachDeadZone;
         ArkanoidEvent.OnBlockDestroyedEvent -= OnBlockDestroyed;
+        // ArkanoidEvent.OnPowerUpReachDeadZoneEvent -= OnPowerUpReachDeadZone;
     }
 
     private void InitGame() {
@@ -35,6 +44,7 @@ public class ArkanoidController : MonoBehaviour {
         _gridController.BuildGrid(_levels[0]);
 
         SetInitialBall();
+        ResetPowerUps();
 
         ArkanoidEvent.OnGameStartEvent?.Invoke();
         ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(0, _totalScore);
@@ -46,9 +56,24 @@ public class ArkanoidController : MonoBehaviour {
         if (blockDestroyed != null) {
             _totalScore += blockDestroyed.Score;
             ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(blockDestroyed.Score, _totalScore); // Se invoca el evento para que se actualice el puntaje en pantalla
+
+            powerUpValue = UnityEngine.Random.value;
+            if (powerUpValue <= 1.0f) {
+                // Spawnea powerup
+                Debug.Log("Random value: " + powerUpValue);
+                Vector2 blockPosition = blockDestroyed.transform.position;
+                // ArkanoidEvent.OnPowerUpSpawnedEvent?.Invoke(blockPosition);
+
+                PowerUp powerUp = SpawnPowerUpAt(blockPosition);
+                // powerUp.GetComponentInChildren<SpriteRenderer>().sprite = powerUp.Type(powerUpValue);
+                powerUp.Type(powerUpValue);
+                // _powerUps.Add(powerUp);
+            }
+
         }
         if (_gridController.GetBlocksActive() == 0) {
             _currentLevel++;
+            ResetPowerUps();
 
             if (_currentLevel >= _levels.Count) {
                 ClearBalls();
@@ -60,6 +85,13 @@ public class ArkanoidController : MonoBehaviour {
                 ArkanoidEvent.OnLevelUpdatedEvent?.Invoke(_currentLevel);
             }
         }
+    }
+
+    private PowerUp SpawnPowerUpAt(Vector2 blockPosition) {
+        if (_powerUpPrefab == null) {
+             _powerUpPrefab = Resources.Load<PowerUp>(POWERUP_PREFAB_PATH);
+        }
+        return Instantiate(_powerUpPrefab, blockPosition, Quaternion.identity);
     }
 
     private void OnBallReachDeadZone(Ball ball) {
@@ -96,8 +128,20 @@ public class ArkanoidController : MonoBehaviour {
     private void ClearBalls() {
         for (int i = _balls.Count - 1; i >= 0; i--) {
             _balls[i].gameObject.SetActive(false);
-            Destroy(_balls[i]);
+            Destroy(_balls[i].gameObject);
         }
         _balls.Clear();
+    }
+
+    // private void OnPowerUpReachDeadZone(PowerUp powerUp) {
+    //     Destroy(powerUp.gameObject);
+    // }
+
+    private void ResetPowerUps() {
+        // for (int i = _powerUps.Count - 1; i >= 0; i--) {
+        //     _powerUps[i].gameObject.SetActive(false);
+        //     Destroy(_powerUps[i].gameObject);
+        // }
+        // _powerUps.Clear();
     }
 }

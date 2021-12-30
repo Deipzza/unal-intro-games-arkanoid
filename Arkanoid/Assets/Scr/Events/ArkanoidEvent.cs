@@ -15,4 +15,8 @@ public static class ArkanoidEvent { // Solo será para guardar eventos por lo qu
     public static ScoreUpdatedAction OnScoreUpdatedEvent;
     public delegate void LevelUpdatedAction(int level); // Evento del UI de puntaje
     public static LevelUpdatedAction OnLevelUpdatedEvent;
+    // public delegate void PowerUpSpawnedAction(Vector2 blockPosition); // Evento del spawn de los powerups
+    // public static PowerUpSpawnedAction OnPowerUpSpawnedEvent;
+    public delegate void PowerUpDeadZoneAction(PowerUp powerUp); // Evento de bola salida por debajo (perder)
+    public static PowerUpDeadZoneAction OnPowerUpReachDeadZoneEvent;
 }

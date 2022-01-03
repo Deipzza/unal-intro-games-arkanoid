@@ -1,6 +1,6 @@
 - ¿Cómo eliminar los powerups cuando el juego termine/se reinicie?
 
-- ¿Es buena la forma en la que estoy manejando los powerups concernientes a la bola?
+-¿Cómo hago que los powerups interactúen con nada que no sea el paddle?
 
 - La bola sigue quedándose atorada horizontal y verticalmente.
 
@@ -9,4 +9,4 @@ Si pierdo estando en el nivel 1 no se reinicia a nivel 0.
 
 - ¿Cómo disminuyo la velocidad? Tiene que ver con currentSpeed pero está definida dentro de CheckVelocity.
 
--¿Cómo hago que los powerups interactúen con nada que no sea el paddle?
+- ¿Es buena la forma en la que estoy manejando los powerups concernientes a la bola?

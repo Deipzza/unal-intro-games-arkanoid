@@ -34,15 +34,15 @@ public class GridController : MonoBehaviour {
             int blockCount = 7;
             float horizontalSpacing = 0.1f;
             Vector2 blockSize = new Vector2(1.5f, 0.5f);
-            BlockTile blockTilePerfab = Resources.Load<BlockTile>("Prefabs/BigBlockTile");
+            BlockTile blockTilePrefab = Resources.Load<BlockTile>("Prefabs/BigBlockTile");
             BlockColor blockColor = rowData.BlockColor;
 
-            if (blockTilePerfab == null) {
+            if (blockTilePrefab == null) {
                 return;
             }
 
             for (int i = 0; i < blockCount; i++) {
-                BlockTile blockTile = Instantiate<BlockTile>(blockTilePerfab, transform);
+                BlockTile blockTile = Instantiate<BlockTile>(blockTilePrefab, transform);
                 float x = _offset.x + blockSize.x/2 + (blockSize.x + horizontalSpacing) * i;
                 float y = _offset.y - (blockSize.y + verticalSpacing) * j;
                 blockTile.transform.position = new Vector3(x, y, 0);

@@ -5,25 +5,24 @@ using UnityEngine;
  
 public class ArkanoidController : MonoBehaviour {
     [SerializeField] private GridController _gridController;
+    [SerializeField] private Paddle _paddle;
     [Space(20)] [SerializeField] private List<LevelData> _levels = new List<LevelData>();
     private int _currentLevel = 0;
     private const string BALL_PREFAB_PATH = "Prefabs/Ball"; // Como es un valor que no se va a cambiar se le pone const
     private readonly Vector2 BALL_INIT_POSITION = new Vector2(0, -0.86f); // Como es un objeto que no se va a cambiar se le pone readonly
     private Ball _ballPrefab = null;
     private List<Ball> _balls = new List<Ball>();
-    // private List<PowerUp> _powerUps = new List<PowerUp>();
-    private int _totalScore = 0;
+    private List<PowerUp> _powerUps = new List<PowerUp>();
+    public int _totalScore = 0;
     private float powerUpValue = 0.0f;
     private PowerUp _powerUpPrefab = null;
     private const string POWERUP_PREFAB_PATH = "Prefabs/PowerUp";
-
-    // TO ERASE LATER
-    //  [SerializeField] private Paddle _paddle;
     
     private void Start() {
+        _paddle.ResetPaddle();
+        ResetPowerUps();
         ArkanoidEvent.OnBallReachDeadZoneEvent += OnBallReachDeadZone;
         ArkanoidEvent.OnBlockDestroyedEvent += OnBlockDestroyed;
-        // ArkanoidEvent.OnPowerUpReachDeadZoneEvent += OnPowerUpReachDeadZone;
     }
 
     private void Update() {
@@ -35,7 +34,6 @@ public class ArkanoidController : MonoBehaviour {
     private void OnDestroy() {
         ArkanoidEvent.OnBallReachDeadZoneEvent -= OnBallReachDeadZone;
         ArkanoidEvent.OnBlockDestroyedEvent -= OnBlockDestroyed;
-        // ArkanoidEvent.OnPowerUpReachDeadZoneEvent -= OnPowerUpReachDeadZone;
     }
 
     private void InitGame() {
@@ -47,6 +45,7 @@ public class ArkanoidController : MonoBehaviour {
         ResetPowerUps();
 
         ArkanoidEvent.OnGameStartEvent?.Invoke();
+        ArkanoidEvent.OnLevelUpdatedEvent?.Invoke(_currentLevel);
         ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(0, _totalScore);
     }
 
@@ -60,14 +59,11 @@ public class ArkanoidController : MonoBehaviour {
             powerUpValue = UnityEngine.Random.value;
             if (powerUpValue <= 1.0f) {
                 // Spawnea powerup
-                Debug.Log("Random value: " + powerUpValue);
                 Vector2 blockPosition = blockDestroyed.transform.position;
-                // ArkanoidEvent.OnPowerUpSpawnedEvent?.Invoke(blockPosition);
 
                 PowerUp powerUp = SpawnPowerUpAt(blockPosition);
-                // powerUp.GetComponentInChildren<SpriteRenderer>().sprite = powerUp.Type(powerUpValue);
                 powerUp.Type(powerUpValue);
-                // _powerUps.Add(powerUp);
+                _powerUps.Add(powerUp);
             }
 
         }
@@ -77,7 +73,7 @@ public class ArkanoidController : MonoBehaviour {
 
             if (_currentLevel >= _levels.Count) {
                 ClearBalls();
-                Debug.LogError("Game Over: WIN!!!!");
+                Debug.LogError("Game Over: YOU WIN!");
             }
             else {
                 SetInitialBall();
@@ -105,8 +101,9 @@ public class ArkanoidController : MonoBehaviour {
     private void CheckGameOver() {
         if (_balls.Count == 0) {
             ClearBalls();
+            ResetPowerUps();
             
-            Debug.Log("Game Over: LOSE!!!");
+            Debug.Log("Game Over: YOU LOSE!");
             ArkanoidEvent.OnGameOverEvent?.Invoke();
         }
     }
@@ -133,15 +130,16 @@ public class ArkanoidController : MonoBehaviour {
         _balls.Clear();
     }
 
-    // private void OnPowerUpReachDeadZone(PowerUp powerUp) {
-    //     Destroy(powerUp.gameObject);
-    // }
-
     private void ResetPowerUps() {
-        // for (int i = _powerUps.Count - 1; i >= 0; i--) {
-        //     _powerUps[i].gameObject.SetActive(false);
-        //     Destroy(_powerUps[i].gameObject);
-        // }
-        // _powerUps.Clear();
+        _paddle.ResetPaddle();
+
+        for (int i = _powerUps.Count - 1; i >= 0; i--) {
+            if (_powerUps[i] == null) {
+                continue;
+            }
+            _powerUps[i].gameObject.SetActive(false);
+            Destroy(_powerUps[i].gameObject);
+        }
+        _powerUps.Clear();
     }
 }

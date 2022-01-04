@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 100784919}
   - component: {fileID: 100784918}
   - component: {fileID: 100784920}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BottomWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,6 @@ GameObject:
   m_Component:
   - component: {fileID: 449040307}
   - component: {fileID: 449040306}
-  - component: {fileID: 449040308}
   m_Layer: 0
   m_Name: ArkanoidController
   m_TagString: Untagged
@@ -281,9 +280,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridController: {fileID: 657816039}
+  _paddle: {fileID: 839885955}
   _levels:
   - {fileID: 11400000, guid: e1a875b503aec2c48853c83598a4e259, type: 2}
   - {fileID: 11400000, guid: 82908faf6c3baec41963e8193c0ec712, type: 2}
+  _totalScore: 0
 --- !u!4 &449040307
 Transform:
   m_ObjectHideFlags: 0
@@ -298,19 +299,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &449040308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 449040305}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e5e679ab86932448062a5e9a368f34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _paddle: {fileID: 839885955}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +729,7 @@ GameObject:
   - component: {fileID: 839885954}
   - component: {fileID: 839885955}
   - component: {fileID: 839885956}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Paddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1531,7 +1519,7 @@ GameObject:
   - component: {fileID: 1998029773}
   - component: {fileID: 1998029775}
   - component: {fileID: 1998029774}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PaddleBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}

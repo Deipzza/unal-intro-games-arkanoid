@@ -17,12 +17,13 @@ public enum BlockColor {
 
 public class BlockTile : MonoBehaviour {
 
-    [SerializeField] BlockType _type = BlockType.Big;
+    [SerializeField] BlockType _type;
     private SpriteRenderer _renderer;
     private Collider2D _collider;
     private int _totalHits = 1; // Máxima cantidad de golpes que puede recibir el bloque
     private int _currentHits = 0; // Cantidad actual de golpes que ha recibido el bloque
     private const string BLOCK_BIG_PATH = "Sprites/BlockTiles/Big/Big_{0}_{1}";
+    private const string BLOCK_SMALL_PATH = "Sprites/BlockTiles/Small/Small_{0}";
     [SerializeField] private BlockColor _color = BlockColor.Blue;
     private int _id;
     [SerializeField] private int _score = 10;
@@ -46,7 +47,6 @@ public class BlockTile : MonoBehaviour {
 
     public void OnHitCollision(ContactPoint2D contactPoint, int hit) { // Se ejecuta cuando la bola colisiona con el bloque
         _currentHits += hit; // Aumento la cantidad de golpes que ha recibido el bloque
-        Debug.Log("hit " + hit);
         // Si la cantidad de golpes es igual o superior que la máxima soportada se desactiva el bloque
         if (_currentHits >= _totalHits) {
             _collider.enabled = false;
@@ -63,11 +63,13 @@ public class BlockTile : MonoBehaviour {
         if (type == BlockType.Big) {
             path = string.Format(BLOCK_BIG_PATH, color, state);
         }
+        else {
+            path = string.Format(BLOCK_SMALL_PATH, color);
+        }
 
         if (string.IsNullOrEmpty(path)) {
             return null;
         }
-
         return Resources.Load<Sprite>(path);
     }
 }

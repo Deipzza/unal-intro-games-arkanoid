@@ -35,6 +35,7 @@ public class Ball : MonoBehaviour {
                 _forceHit = 1;
                 transform.localScale = Vector3.one;
                 _timeRemainingSuper = 10f;
+                GetComponent<CircleCollider2D>().isTrigger = false;
             }
         }
 
@@ -44,15 +45,15 @@ public class Ball : MonoBehaviour {
             }
             else {
                 if (_isSped == 1) {
-                    _minSpeed -= 2f;
-                    _maxSpeed -= 2f;
-                    _rb.velocity -= Vector2.one * 2;
+                    _minSpeed /= 1.5f;
+                    _maxSpeed /= 1.5f;
+                    _rb.velocity /= 1.5f;
                     _timeRemainingSpedUp = 5f;
                 }
                 else if (_isSped == -1) {
-                    _minSpeed += 2f;
-                    _maxSpeed += 2f;
-                    _rb.velocity += Vector2.one * 2;
+                    _minSpeed /= 0.5f;
+                    _maxSpeed /= 0.5f;
+                    _rb.velocity /= 0.5f;
                     _timeRemainingSpedUp = 5f;
                 }
                 _isSped = 0;
@@ -71,10 +72,12 @@ public class Ball : MonoBehaviour {
             velocity = velocity.normalized * _maxSpeed;
         }
         if(Mathf.Abs(velocity.x) < BALL_VELOCITY_MIN_AXIS_VALUE) {
-            velocity.x += Mathf.Sign(velocity.x) * BALL_VELOCITY_MIN_AXIS_VALUE * Time.deltaTime;
+            float sign = velocity.x == 0 ? Mathf.Sign(-transform.position.x) : Mathf.Sign(velocity.x);
+            velocity.x += sign * BALL_VELOCITY_MIN_AXIS_VALUE * Time.deltaTime;
         }
         else if (Mathf.Abs(velocity.y) < BALL_VELOCITY_MIN_AXIS_VALUE) {   
-            velocity.y += Mathf.Sign(velocity.y) * BALL_VELOCITY_MIN_AXIS_VALUE * Time.deltaTime;
+            float sign = velocity.y == 0 ? Mathf.Sign(-transform.position.y) : Mathf.Sign(velocity.y);
+            velocity.y += sign * BALL_VELOCITY_MIN_AXIS_VALUE * Time.deltaTime;
         }
         _rb.velocity = velocity;
     }
@@ -94,4 +97,9 @@ public class Ball : MonoBehaviour {
         ContactPoint2D contactPoint = other.contacts[0];
         blockTileHit.OnHitCollision(contactPoint, _forceHit);
     }
+
+    // private void OnTriggerEnter2D(Collider2D other) {
+    //     Debug.Log("Trigger");
+    //     // :(
+    // }
 }

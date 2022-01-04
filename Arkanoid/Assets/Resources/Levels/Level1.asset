@@ -12,34 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4cec8136e350ca408b5ca7e400da5d8, type: 3}
   m_Name: Level1
   m_EditorClassIdentifier: 
-  RowCount: 7
-  rowSpacing: 0.1
+  RowCount: 4
+  rowSpacing: 0.5
   Rows:
+  - BlockAmount: 21
+    blockSpacing: 0.1
+    BlockType: 0
+    BlockColor: 1
   - BlockAmount: 7
+    blockSpacing: 0.1
+    BlockType: 1
+    BlockColor: 3
+  - BlockAmount: 21
     blockSpacing: 0.1
     BlockType: 0
     BlockColor: 0
   - BlockAmount: 7
     blockSpacing: 0.1
     BlockType: 1
-    BlockColor: 0
-  - BlockAmount: 7
-    blockSpacing: 0.1
-    BlockType: 0
-    BlockColor: 0
-  - BlockAmount: 7
-    blockSpacing: 0.1
-    BlockType: 1
-    BlockColor: 0
-  - BlockAmount: 7
-    blockSpacing: 0.1
-    BlockType: 0
-    BlockColor: 0
-  - BlockAmount: 7
-    blockSpacing: 0.1
-    BlockType: 1
-    BlockColor: 0
-  - BlockAmount: 7
-    blockSpacing: 0.1
-    BlockType: 0
-    BlockColor: 0
+    BlockColor: 4

@@ -16,10 +16,8 @@ public class Paddle : MonoBehaviour {
             return _cam;
         }
     }
-
-    void Start() {
-        
-    }
+    private SpriteRenderer _paddleRenderer;
+    private Animator _paddleAnimator;
 
     void Update() {
         _targetPosition.x = Camera.ScreenToWorldPoint(Input.mousePosition).x;
@@ -32,8 +30,9 @@ public class Paddle : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D other) {
         // Verifico si el objeto impactado no tiene un componente de tipo PowerUp
         PowerUp powerUpHit;
+        // Si no lo tiene, no hace nada
         if (!other.collider.TryGetComponent(out powerUpHit)) {
-            return; // Si no lo tiene, no hace nada
+            return;
         }
         // Si sí lo tiene, invoca OnHitCOllision con el punto de contacto entre bola y bloque
         ContactPoint2D contactPoint = other.contacts[0];
@@ -41,6 +40,10 @@ public class Paddle : MonoBehaviour {
     }
 
     public void ResetPaddle() {
+        _paddleRenderer = GetComponentInChildren<SpriteRenderer>();
+        _paddleAnimator = GetComponentInChildren<Animator>();
 
+        _paddleAnimator.enabled = true;
+        _paddleRenderer.sprite = Resources.Load<Sprite>("Sprites/Paddles/Normal_0");
     }
 }

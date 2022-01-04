@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2597861344906647724}
   - component: {fileID: 2597861344906647727}
   - component: {fileID: 2597861344906647726}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ MonoBehaviour:
   _isSuper: 0
   _forceHit: 1
   _timeRemainingSuper: 10
-  _isSpedUp: 0
+  _isSped: 0
   _timeRemainingSpedUp: 5
 --- !u!1 &2597861345889414024
 GameObject:
@@ -102,7 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2597861345889414025}
   - component: {fileID: 2597861345889414038}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BallBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,7 +14,6 @@ public class ArkanoidController : MonoBehaviour {
     private List<Ball> _balls = new List<Ball>();
     private List<PowerUp> _powerUps = new List<PowerUp>();
     public int _totalScore = 0;
-    private float powerUpValue = 0.0f;
     private PowerUp _powerUpPrefab = null;
     private const string POWERUP_PREFAB_PATH = "Prefabs/PowerUp";
     
@@ -56,13 +55,12 @@ public class ArkanoidController : MonoBehaviour {
             _totalScore += blockDestroyed.Score;
             ArkanoidEvent.OnScoreUpdatedEvent?.Invoke(blockDestroyed.Score, _totalScore); // Se invoca el evento para que se actualice el puntaje en pantalla
 
-            powerUpValue = UnityEngine.Random.value;
-            if (powerUpValue <= 1.0f) {
+            if (UnityEngine.Random.value <= 0.5f) {
                 // Spawnea powerup
                 Vector2 blockPosition = blockDestroyed.transform.position;
 
                 PowerUp powerUp = SpawnPowerUpAt(blockPosition);
-                powerUp.Type(powerUpValue);
+                powerUp.Type();
                 _powerUps.Add(powerUp);
             }
 
@@ -73,7 +71,7 @@ public class ArkanoidController : MonoBehaviour {
 
             if (_currentLevel >= _levels.Count) {
                 ClearBalls();
-                Debug.LogError("Game Over: YOU WIN!");
+                Debug.Log("Game Over: YOU WIN!");
             }
             else {
                 SetInitialBall();

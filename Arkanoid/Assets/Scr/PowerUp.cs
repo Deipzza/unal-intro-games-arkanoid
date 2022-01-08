@@ -35,7 +35,7 @@ public class PowerUp : MonoBehaviour {
     }
 
     // Retornar el tipo de powerup que será
-    public void Type(float randomValue) {
+    public void Type() {
         float anotherRandom = UnityEngine.Random.value;
 
         // Podemos tener tres tipos de powerup: scale, superball y speed
@@ -51,11 +51,6 @@ public class PowerUp : MonoBehaviour {
                 gameObject.GetComponentInChildren<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/PowerUps/Scale_Normal");
             }
         }
-        // Spawnear superball
-        // else if (anotherRandom >= 0.25f && anotherRandom < 0.5f) {
-        //     // Debug.Log("Superball " + anotherRandom);
-        //     gameObject.GetComponentInChildren<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/PowerUps/Superball");
-        // }
 
         // Spawnear speed
         else if (anotherRandom >= 0.33f && anotherRandom < 0.66f) {
@@ -111,13 +106,6 @@ public class PowerUp : MonoBehaviour {
             path = string.Format(PADDLE_PATH, "Normal_0");
             _paddleCollider.size = new Vector2(1.56f, 0.4f);
             _paddleRenderer.sprite = Resources.Load<Sprite>(path);
-        }
-        else if (spriteName == "Superball") {
-            // Debug.Log("SUPAAAA");
-            scriptBall._isSuper = true;
-            scriptBall._forceHit = 2;
-            _ball.transform.localScale = Vector3.one * 2;
-            _ball.GetComponent<CircleCollider2D>().isTrigger = true;
         }
         else if (spriteName == "Speed_Fast") {
             // Debug.Log("FAST");
